@@ -1,5 +1,19 @@
 document.getElementById("book").addEventListener("click",book);
 
+async function getUserName(){
+    let intr = document.getElementById("intro");
+    let res = await fetch("http://localhost:3000/book/getname",{
+         method : "GET",
+         headers : {
+            "Content-Type" : "application/json",
+            Authorization : localStorage.getItem("token")
+         }
+    })
+    res = await res.json();
+    console.log(res);
+    intr.innerHTML = `Hi ${res[0].Name}, You had Signup With this Email ID:- ${res[0].Email}` 
+}
+getUserName();
 async function getBooking(){
     let res = await fetch("http://localhost:3000/book",{
          method : "GET",

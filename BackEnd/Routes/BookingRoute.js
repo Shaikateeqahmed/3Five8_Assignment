@@ -2,6 +2,18 @@ const express = require("express");
 const Book = express.Router();
 const fs = require("fs");
 
+Book.get("/getname",(req,res)=>{
+    let UserID = req.body.UserID;
+    let users = fs.readFileSync("./UserDB.json",{encoding:"utf8"});
+    let parse = JSON.parse(users);
+    let UserByID = parse.filter((el)=>{
+        if(el.id==UserID){
+            return el;
+        }
+    })
+    res.json(UserByID);
+})
+
 //User can get the information of all the Booking made by them.
 Book.get("/", (req, res) => {
     try {
@@ -91,10 +103,10 @@ Book.delete("/:id", (req, res) => {
                 return el;
             }
         })
-    
+
         //Checking for Booking with the specific ID exist or not.
         if (UserID_in_booking.length > 0) {
-    
+
             //Checking for user is Authorised to Delete the booking or not.
             if (UserID_in_booking[0].UserID === UserID) {
                 let newbooking = parse.filter((el) => {
@@ -102,7 +114,7 @@ Book.delete("/:id", (req, res) => {
                         return el;
                     }
                 })
-    
+
                 //Saving the new Booking list.
                 fs.writeFileSync("./Booking.json", JSON.stringify(newbooking));
                 res.status(200).json(`Booking Having Id:- ${bookingid} is deleted successfully!`);
@@ -115,7 +127,7 @@ Book.delete("/:id", (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-   
+
 
 
 })
