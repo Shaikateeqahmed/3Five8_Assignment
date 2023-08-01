@@ -15,10 +15,12 @@ app.use(authenticate);
 app.use("/book",Book);
 
 
-app.listen(process.env.port,()=>{
+const server =  app.listen(process.env.port,()=>{
     try {
         console.log(`Server is Running on Port ${process.env.port}`);
     } catch (error) {
         console.log({error:error.message});
     }
 })
+
+module.exports = {server};
