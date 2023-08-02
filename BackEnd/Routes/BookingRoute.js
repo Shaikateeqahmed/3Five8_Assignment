@@ -54,7 +54,7 @@ Book.post("/", (req, res) => {
                     if (el.Date === Date) {
 
                         //Checking for slot is available for the particular Time.
-                        if ((el.StartTime <= StartTime && StartTime < el.EndTime) || (el.StartTime < EndTime && EndTime <= el.EndTime)) {
+                        if ((el.StartTime >= StartTime && StartTime < el.EndTime) || (el.StartTime > EndTime && EndTime <= el.EndTime)) {
                             Is_Slot_Available = false;
                         }
                     }
@@ -75,7 +75,7 @@ Book.post("/", (req, res) => {
                 }
 
                 //Saving the information in Booking.json.
-                parse.push({ id: parse.length + 1, Type, Date, StartTime, EndTime, Amount: amount, UserID: req.body.UserID });
+                parse.push({ id: parse[parse.length-1].id+1, Type, Date, StartTime, EndTime, Amount: amount, UserID: req.body.UserID });
                 fs.writeFileSync("./Booking.json", JSON.stringify(parse));
                 res.status(200).json(`Booked, Rs.${amount}`);
             } else {
@@ -96,19 +96,19 @@ Book.delete("/:id", (req, res) => {
         let booking = fs.readFileSync("./Booking.json", "utf-8");
         let parse = JSON.parse(booking);
         let UserID = req.body.UserID;
-        console.log(typeof bookingid);
         //Checking for User is having booking or not.
         let UserID_in_booking = parse.filter((el) => {
             if (bookingid == el.id) {
                 return el;
             }
         })
+        console.log(UserID_in_booking,typeof UserID,UserID);
 
         //Checking for Booking with the specific ID exist or not.
         if (UserID_in_booking.length > 0) {
 
             //Checking for user is Authorised to Delete the booking or not.
-            if (UserID_in_booking[0].UserID === UserID) {
+            if (UserID_in_booking[0].UserID == UserID) {
                 let newbooking = parse.filter((el) => {
                     if (el.id != bookingid) {
                         return el;
