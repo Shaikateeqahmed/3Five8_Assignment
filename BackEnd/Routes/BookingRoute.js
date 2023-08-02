@@ -54,21 +54,35 @@ Book.post("/", (req, res) => {
                     if (el.Date === Date) {
 
                         //Checking for slot is available for the particular Time.
-                        if ((el.StartTime >= StartTime && StartTime < el.EndTime) || (el.StartTime > EndTime && EndTime <= el.EndTime)) {
-                            Is_Slot_Available = false;
+                        if(StartTime==10||StartTime==11||StartTime==12){
+                            if ((el.StartTime >= StartTime && StartTime < (el.EndTime+el.StartTime)) || (el.StartTime > EndTime && EndTime <= (el.EndTime+el.StartTime))) {
+                                Is_Slot_Available = false;
+                            }
+                        }else{
+                            if ((el.StartTime >= StartTime && StartTime < el.EndTime) || (el.StartTime > EndTime && EndTime <= el.EndTime)) {
+                                Is_Slot_Available = false;
+                            }
                         }
+                       
                     }
                 }
             })
+ 
 
             //Calculation of a Amount if slot is available.
             if (Is_Slot_Available) {
                 let amount = 0;
-                if (EndTime > StartTime && Type === "Clubhouse") {
+                if (StartTime>=4 && StartTime!=10 && StartTime!=11 && StartTime!=12 && Type === "Clubhouse") {
                     amount = (EndTime - StartTime) * 500;
-                } else if (EndTime < StartTime && Type === "Clubhouse") {
+                } else if (EndTime < StartTime && Type === "Clubhouse" && EndTime < 4) {
                     amount = ((12 - StartTime) + EndTime) * 100;
-                } else if (EndTime > StartTime && Type === "Tennis Court") {
+                }else if((StartTime<4 || StartTime==10 || StartTime==11 || StartTime==12) && EndTime>4){
+                    if(StartTime<=12 && StartTime>=10){
+                        amount = (12-StartTime+4)*100+ (EndTime - 4)*500;
+                    }else{
+                        amount = (4-StartTime)*100+ (EndTime-4)*500;
+                    }
+                }else if (EndTime > StartTime && Type === "Tennis Court") {
                     amount = (EndTime - StartTime) * 50;
                 } else if (Type === "Tennis Court") {
                     amount = ((12 - StartTime) + EndTime) * 50;

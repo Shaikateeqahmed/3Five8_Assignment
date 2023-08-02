@@ -64,9 +64,11 @@ async function book(e){
         obj = {Type:type,Date:date,StartTime:starttime,EndTime:endtime};
     }else if(endtime<starttime && (starttime==10||starttime==11||starttime==12)){
         obj = {Type:type,Date:date,StartTime:starttime,EndTime:endtime};
+    }else if(endtime==10){
+        obj = {Type:type,Date:date,StartTime:starttime,EndTime:endtime};
     }else{
         alert(`Please Select a Appropride time!`);
-    } 
+    }
     console.log(obj);
 
     let res = await fetch("http://localhost:3000/book",{
