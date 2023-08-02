@@ -68,3 +68,7 @@
 
 
 Presentation Vedio :- https://drive.google.com/file/d/1mZGEKwHmbJ6_klpw1KCxJWgVOCjY5a0M/view?usp=sharing
+
+
+to run backend locally then please go to Backend Folder in terminal and Run this command :- npm run server;
+

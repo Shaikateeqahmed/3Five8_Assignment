@@ -54,13 +54,16 @@ Book.post("/", (req, res) => {
                     if (el.Date === Date) {
 
                         //Checking for slot is available for the particular Time.
-                        if(StartTime==10||StartTime==11||StartTime==12){
-                            if ((el.StartTime >= StartTime && StartTime < (el.EndTime+el.StartTime)) || (el.StartTime > EndTime && EndTime <= (el.EndTime+el.StartTime))) {
+                        if((StartTime==10||StartTime==11||StartTime==12) && (el.StartTime==10 ||el.StartTime==11||el.StartTime==12)){
+                            if ((el.StartTime <= StartTime && StartTime < (el.EndTime+el.StartTime)) || (el.StartTime < EndTime && EndTime <= (el.EndTime+el.StartTime))) {
                                 Is_Slot_Available = false;
+                                console.log(el,1)
                             }
                         }else{
-                            if ((el.StartTime >= StartTime && StartTime < el.EndTime) || (el.StartTime > EndTime && EndTime <= el.EndTime)) {
+                            if ((el.StartTime <= StartTime && StartTime < el.EndTime) || (el.StartTime < EndTime && EndTime <= el.EndTime)) {
                                 Is_Slot_Available = false;
+                                console.log(el,2);
+                                console.log(el.StartTime>EndTime);
                             }
                         }
                        
@@ -76,7 +79,7 @@ Book.post("/", (req, res) => {
                     amount = (EndTime - StartTime) * 500;
                 } else if (EndTime < StartTime && Type === "Clubhouse" && EndTime < 4) {
                     amount = ((12 - StartTime) + EndTime) * 100;
-                }else if((StartTime<4 || StartTime==10 || StartTime==11 || StartTime==12) && EndTime>4){
+                }else if((StartTime<4 || StartTime==10 || StartTime==11 || StartTime==12) && EndTime>4 && Type === "Clubhouse"){
                     if(StartTime<=12 && StartTime>=10){
                         amount = (12-StartTime+4)*100+ (EndTime - 4)*500;
                     }else{
@@ -86,6 +89,8 @@ Book.post("/", (req, res) => {
                     amount = (EndTime - StartTime) * 50;
                 } else if (Type === "Tennis Court") {
                     amount = ((12 - StartTime) + EndTime) * 50;
+                }else if(EndTime>StartTime && Type==="Clubhouse"){
+                    amount = (StartTime-EndTime)*100;
                 }
 
                 //Saving the information in Booking.json.
