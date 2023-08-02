@@ -57,13 +57,10 @@ Book.post("/", (req, res) => {
                         if((StartTime==10||StartTime==11||StartTime==12) && (el.StartTime==10 ||el.StartTime==11||el.StartTime==12)){
                             if ((el.StartTime <= StartTime && StartTime < (el.EndTime+el.StartTime)) || (el.StartTime < EndTime && EndTime <= (el.EndTime+el.StartTime))) {
                                 Is_Slot_Available = false;
-                                console.log(el,1)
                             }
                         }else{
                             if ((el.StartTime <= StartTime && StartTime < el.EndTime) || (el.StartTime < EndTime && EndTime <= el.EndTime)) {
                                 Is_Slot_Available = false;
-                                console.log(el,2);
-                                console.log(el.StartTime>EndTime);
                             }
                         }
                        

@@ -67,8 +67,11 @@
 
 
 
-Presentation Vedio :- https://drive.google.com/file/d/1mZGEKwHmbJ6_klpw1KCxJWgVOCjY5a0M/view?usp=sharing
+Presentation Vedio :- https://drive.google.com/file/d/1zQQvPd_5fdoZlNDWzV9ssYLKgEXLdff9/view?usp=sharing
 
 
 to run backend locally then please go to Backend Folder in terminal and Run this command :- npm run server;
 
+FrontEnd Deployment link :- https://64caa1750d98b90d4c936161--wonderful-naiad-f05249.netlify.app/booking;
+
+if want to check the code through FrontEnd Deployment link then please first run the backend localy to Connect FrontEnd with Backend.
